@@ -11,5 +11,6 @@
             <input type="text" name="name" class="form-control" id="name" required>
         </div>
         <button type="submit" class="btn btn-primary mt-2">Create Category</button>
+        <a href="{{ route('users.create') }}" type="submit" class="btn btn-primary mt-2">Kembali</a>
     </form>
 @endsection

@@ -19,8 +19,8 @@
             <label for="category_id">Category</label>
             <select name="category_id" id="category_id" class="form-control">
                 <option value="">No Category</option>
-                @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" {{ $user->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                @foreach ($kategoris as $kategori)
+                    <option value="{{ $kategori->id }}" {{ $user->kategori_id == $kategori->id ? 'selected' : '' }}>{{ $kategori->name }}</option>
                 @endforeach
             </select>
         </div>

@@ -10,77 +10,73 @@ class DataController extends Controller
 {
     public function index()
     {
-        $kategoris = Data::with('kategori')->get();
-        return view('posts.index', compact('users'));
+        $data = Data::with('kategori')->get();
+        return view('posts.index', compact('data'));
     }
 
     public function create()
     {
-        $kategoris = Kategori::all(); // Mengambil semua kategori
-        return view('posts.create', compact('kategoris')); // Kirimkan $kategoris ke view
+        $data = Kategori::all();
+        return view('posts.create', compact('data'));
     }
-
 
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'kategori_id' => 'nullable|exists:kategoris,id',  // Ganti 'categories' menjadi 'kategoris'
+            'email' => 'required|email|unique:data,email',
+            'kategori_id' => 'nullable|exists:kategoris,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Jika validasi berhasil, lanjutkan dengan penyimpanan data.
-        $user = new Data();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->kategori_id = $request->kategori_id;
+        $data = new Data();
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->kategori_id = $request->kategori_id;
 
-        // Menyimpan gambar jika ada
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('public/images');
-            $user->image = basename($imagePath);
+            $data->image = $request->file('image')->store('public/images');
         }
 
-        $user->save();
+        $data->save();
 
-        return redirect()->route('posts.index')->with('success', 'User created successfully');
+        return redirect()->route('users.index')->with('success', 'Data created successfully');
     }
 
     public function edit($id)
     {
         $user = Data::findOrFail($id);
         $kategoris = Kategori::all();
-        return view('posts.edit', compact('user', 'kategori'));
+        return view('posts.edit', compact('user', 'kategoris'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'kategori_id' => 'nullable|exists:categories,id',
+            'email' => 'required|email|unique:data,email,' . $id,
+            'kategori_id' => 'nullable|exists:kategoris,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $user = Data::findOrFail($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->kategori_id = $request->kategori_id;
+        $data = Data::findOrFail($id);
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->kategori_id = $request->kategori_id;
 
         if ($request->hasFile('image')) {
-            $user->image = $request->file('image');
+            $data->image = $request->file('image')->store('public/images');
         }
 
-        $user->save();
-        return redirect()->route('posts.index');
+        $data->save();
+        return redirect()->route('users.index')->with('success', 'Data updated successfully');
     }
 
     public function destroy($id)
     {
-        $user = Data::findOrFail($id);
-        $user->delete();
-        return redirect()->route('posts.index');
+        $data = Data::findOrFail($id);
+        $data->delete();
+        return redirect()->route('users.index')->with('success', 'Data deleted successfully');
     }
 
     public function show($id)

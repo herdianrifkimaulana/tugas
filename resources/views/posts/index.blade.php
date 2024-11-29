@@ -3,7 +3,7 @@
 
 @section('content')
     <h1>Users List</h1>
-    <a href="{{ route('users.create') }}" class="btn btn-primary">Tambah data</a>
+    <a href="{{ route('users.create') }}" class="btn btn-primary mb-2">Tambah data</a>
 
     <table class="table table-bordered">
         <thead>
@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($users as $index => $user)
+            @foreach ($data as $index => $user)
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $user->name }}</td>
@@ -25,7 +25,7 @@
                     <td>{{ $user->kategori ? $user->kategori->name : 'No kategori' }}</td>
                     <td><img src="{{ $user->getImageUrlAttribute() }}" width="50" height="50" alt="image"></td>
                     <td>
-                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-warning">Show</a>
+                        {{-- <a href="{{ route('users.show', $user->id) }}" class="btn btn-warning">Show</a> --}}
                         <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Edit</a>
                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
                             @csrf

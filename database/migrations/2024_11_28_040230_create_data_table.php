@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('datas', function (Blueprint $table) {
+        Schema::create('data', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->foreignId('kategori_id')->nullable()->constrained('kategoris');  // Sesuaikan dengan 'kategoris'
+            $table->foreignId('kategori_id')->nullable()->constrained('kategoris')->onDelete('set null'); // Relasi ke tabel kategoris
             $table->string('image')->nullable();
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('datas');
+        Schema::dropIfExists('data');
     }
 };

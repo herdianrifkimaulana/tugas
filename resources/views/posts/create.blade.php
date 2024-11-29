@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@extends('layouts.navbar')
+{{-- @extends('layouts.navbar') --}}
 
 @section('content')
     <h1>Create User</h1>
@@ -18,7 +18,7 @@
             <label for="kategori_id">Kategori</label>
             <select name="kategori_id" id="kategori_id" class="form-control">
                 <option value="">Select kategori</option>
-                @foreach ($kategoris as $kategori)
+                @foreach ($data as $kategori)
                     <option value="{{ $kategori->id }}">{{ $kategori->name }}</option>
                 @endforeach
             </select>
@@ -28,5 +28,7 @@
             <input type="file" name="image" class="form-control" id="image">
         </div>
         <button type="submit" class="btn btn-primary mt-2">Save User</button>
+        <a href="{{ route('categories.create') }}" class="btn btn-primary mt-2">Create Kategori</a>
+        <a href="{{ route('users.index') }}" class="btn btn-primary mt-2">kembali</a>
     </form>
 @endsection
